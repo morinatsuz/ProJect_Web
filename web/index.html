@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Management</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Event Management</h1>
+        <table border="2" cellspacing="1" cellpadding="2">
+            <thead>
+                <tr>
+                    <th>Manage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Manage Event</td>
+                </tr>
+                <tr>
+                    <td>
+                        <form action="ManageEventServlet" method="POST"> <input type="text" name="event_id" value="" />
+                            <input type="submit" name="event_action" value="create" />
+                            <input type="submit" name="event_action" value="edit" />
+                        </form>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </body>
+</html>
