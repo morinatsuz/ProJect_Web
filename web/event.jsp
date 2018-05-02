@@ -23,11 +23,12 @@
         </sql:query>
         <% String adminCheck = (String) session.getAttribute("type");%>
         <c:set scope="session" var="adminCheck" value="<%= adminCheck%>" ></c:set>
-        <%! int count = 1;%>
+        <% int num2 = (int) session.getAttribute("sid");%>
         <a href="event.jsp"><button type="submit">Home</button></a> 
         <a href="LogoutServlet"><button type="submit">Logout</button></a>
         <a href="ProfileServlet"><button type="submit">Profile</button></a>
-        <br>
+        <br> <br>
+        Hello <%= num2 %> <br> <br>
         <form action="search.jsp" method="POST">
             Search : <input type="text" name="searchText" value="" />
 
@@ -36,31 +37,36 @@
         <c:if test="${adminCheck == 'admin'}">
             <form action="CheckServlet" method="POST">
                 <button type="submit" name="view" value="manage">Manage Event</button>
-                <button type="submit" name="view" value="result">View User</button>
             </form>
         </c:if>
+        <% request.setCharacterEncoding("UTF-8"); %>
+        
+
         <table border="1">
             <thead>
                 <tr>
                     <th>ชื่อกิจกรรม</th>
                     <th>รายละเอียดกิจกรรม</th>
                     <th>จำนวนคนที่รับสมัคร</th>
-                    
+                    <th>จำนวนคนที่สมัครแล้ว</th>
                     <th>สถานที่</th>
                     <th>วันที่เริ่มกิจกรรม</th>
                     <th>วันที่จบกิจกรรม</th>
                     <th>เวลาที่ปิดรับสมัคร</th>
-
                 </tr>
             </thead>
             <tbody>
 
                 <c:forEach var="rows" items="${db.rows}">
-
+        
+        <sql:query var="db2" dataSource="mysql" >
+            SELECT * FROM student_event WHERE student_sid = <%= num2 %> AND event_eid = <c:out value="${rows.eid}"/>
+        </sql:query>
                     <tr>
                         <td><c:out value="${rows.title}"/> </td>
                         <td><c:out value="${rows.descript}"/> </td>
                         <td><c:out value="${rows.received_no}"/> </td>
+                        <td><c:out value="${rows.registered_no}"/> </td>
                         <td><c:out value="${rows.location}"/></td>
                         <td><c:out value="${rows.start_date}"/></td>
                         <td><c:out value="${rows.end_date}"/> </td>
@@ -69,15 +75,18 @@
                                 <button type="submit" name="view" value="${rows.eid}">View</button>
                             </form>
                         </td>
+
                         
-                                <td>
-                            <c:if test="${adminCheck == 'admin'}">
-                                <form action="ViewRegistered.jsp">
-                                <button type="submit" name="regis" value="${rows.eid}">View Registered</button>
-                                    </form>
-                                </c:if>
-                            
-                                    </td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${db2.rowCount == 0}">
+                                    Not Join
+                                </c:when>
+                                <c:otherwise>
+                                    Already Joined
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
                     </tr>          
 
                 </c:forEach>  

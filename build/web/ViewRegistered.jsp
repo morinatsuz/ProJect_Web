@@ -18,7 +18,7 @@
                            url="jdbc:mysql://localhost:3306/db_project"
                            user="root"  password=""/>
         <% String regis = request.getParameter("regis") ;%>
-       
+        <%-- regis --%>
         <sql:query var="db" dataSource="mysql">
             SELECT * FROM student_event se join students s on (se.student_sid = s.sid)
             join users u on (u.uid = s.user_uid) where se.event_eid = <%= regis %>
