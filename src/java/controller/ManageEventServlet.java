@@ -154,8 +154,10 @@ public class ManageEventServlet extends HttpServlet {
                 
                 //Query for getting pic_url
                 ResultSet rsp = stmt.executeQuery(queryP);
-                rsp.next();
-                request.setAttribute("pic_url", rsp.getString("pic_url"));
+                while (rsp.next()) {
+                    String pic_url = rsp.getString("pic_url");
+                    request.setAttribute("pic_url", pic_url.isEmpty() ? "" : pic_url);
+                }
 
                 String query2 = "SELECT COUNT(t_title) 'Total_No' FROM event_type";
                 String query3 = "SELECT t_title FROM event_type ORDER BY tid";
@@ -206,7 +208,7 @@ public class ManageEventServlet extends HttpServlet {
                 String expired_date = targetFormat.format(expire);
 
                 String gmap_url = request.getParameter("gmap_url");
-                String events_type_tid = request.getParameter("events_type_tid");
+                String events_type_tid = request.getParameter("event_type_tid");
                 String creatorAID = request.getParameter("admins_aid");
                 
                 //Get all picture parameters from request scope
@@ -225,7 +227,8 @@ public class ManageEventServlet extends HttpServlet {
                 
                 //SQL command for editing picture
                 String queryP = "UPDATE pictures SET pic_url='"
-                        + pic_url + "' WHERE events_eid = " + event_id;
+                        + (pic_url.isEmpty() ? null : "'" + pic_url + "'") 
+                        + "' WHERE events_eid = " + event_id;
                 
                 //Query update from all command
                 Statement stmt = conn.createStatement();

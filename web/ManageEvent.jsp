@@ -18,7 +18,7 @@
         <% String event_action = request.getParameter("event_action"); %>
         <c:set var="event_id" value="${requestScope.event_id}"/>
         <c:set var="event_action" value="${requestScope.event_action}"/>
-        <c:set var="etid" value="requestScope.events_type_tid" scope="page"/>
+        <c:set var="etid" value="requestScope.events_type_tid"/>
         <c:if test="${event_action == 'create'}" >
             <h1>Create Event</h1>
         </c:if>
@@ -51,7 +51,7 @@
             <select name="event_type_tid">
                 <c:forEach var="type" items="${requestScope.event_types}">
                     <c:set var="count" value="${count + 1}" scope="page"/>
-                        <option value="${count}">${count}. ${type}</option>
+                    <option value="${count}">${count}. ${type}</option>
                 </c:forEach> 
             </select><br>
             Picture URL: <input type="text" name="pic_url" value="${requestScope.pic_url}" />
