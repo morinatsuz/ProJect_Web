@@ -51,6 +51,8 @@
                     <option value="${count}">${count}. ${type}</option>
                 </c:forEach> 
             </select><br>
+            Picture URL: <input type="text" name="pic_url" value="${requestScope.pic_url}" />
+            <br><br>
             <c:if test="${event_action == 'create'}" >
                 <input type="submit" name="event_action" value="Create" />
             </c:if>

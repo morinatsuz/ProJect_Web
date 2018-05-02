@@ -65,7 +65,6 @@ public class ManageEventServlet extends HttpServlet {
             String event_action = request.getParameter("event_action");
             out.println(event_id + " " + event_action);
             
-//            int k = 0/0;
             if (event_action.equals("create")) {
                 Statement stmt = conn.createStatement();
                 String query2 = "SELECT COUNT(t_title) 'Total_No' FROM event_type";
@@ -99,6 +98,7 @@ public class ManageEventServlet extends HttpServlet {
             } else if (event_action.equals("edit")) {
                 request.setAttribute("event_id", event_id);
                 String query = "SELECT * FROM events WHERE eid=" + event_id;
+                String queryP = "SELECT pic_url FROM pictures WHERE events_eid = " + event_id;
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
                 rs.next();
@@ -123,6 +123,11 @@ public class ManageEventServlet extends HttpServlet {
                 request.setAttribute("gmap_url", rs.getString("gmap_url"));
                 request.setAttribute("events_type_tid", rs.getString("events_type_tid"));
                 request.setAttribute("admins_aid", rs.getString("admins_aid"));
+                
+                //Query for getting pic_url
+                ResultSet rsp = stmt.executeQuery(queryP);
+                rsp.next();
+                request.setAttribute("pic_url", rsp.getString("pic_url"));
 
                 String query2 = "SELECT COUNT(t_title) 'Total_No' FROM event_type";
                 String query3 = "SELECT t_title FROM event_type";
@@ -147,6 +152,7 @@ public class ManageEventServlet extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("ManageEvent.jsp");
                 rd.forward(request, response);
             } else if (event_action.equals("Save")) {
+                //Get all event parameters from request scope
                 String title = request.getParameter("title");
                 String descript = request.getParameter("descript");
                 String received_no = request.getParameter("received_no");
@@ -174,6 +180,11 @@ public class ManageEventServlet extends HttpServlet {
                 String gmap_url = request.getParameter("gmap_url");
                 String events_type_tid = request.getParameter("events_type_tid");
                 String admins_aid = request.getParameter("admins_aid");
+                
+                //Get all picture parameters from request scope
+                String pic_url = request.getParameter("pic_url");
+                
+                //SQL command for editing event
                 String query = "UPDATE events SET title='"
                         + title + "', descript='" + descript + "', received_no="
                         + received_no + ", registered_no=" + registered_no
@@ -183,8 +194,17 @@ public class ManageEventServlet extends HttpServlet {
                         + expired_date + " " + expired_time + "', gmap_url='"
                         + gmap_url + "', events_type_tid=" + events_type_tid
                         + ", admins_aid=" + admins_aid + " WHERE eid=" + event_id;
+                
+                //SQL command for editing picture
+                String queryP = "UPDATE pictures SET pic_url='"
+                        + pic_url + "' WHERE events_eid = " + event_id;
+                
+                //Query update from all command
                 Statement stmt = conn.createStatement();
-                int numRow = stmt.executeUpdate(query);
+                int numRow = 0;
+                numRow += stmt.executeUpdate(query);
+                numRow += stmt.executeUpdate(queryP);
+                
                 response.sendRedirect("event.jsp");
             } else if (event_action.equals("Create")) {
                 String title = request.getParameter("title");
@@ -213,8 +233,12 @@ public class ManageEventServlet extends HttpServlet {
 
                 String gmap_url = request.getParameter("gmap_url");
                 String events_type_tid = request.getParameter("event_type_tid");
-                out.print("events_type_tid.isEmpty() = " + events_type_tid.isEmpty());
                 String admins_aid = request.getParameter("admins_aid");
+                
+                //SQL command for finding total events
+                String queryE = "SELECT COUNT(eid) FROM events;";
+                
+                //SQL command for inserting event information
                 String queryC = "INSERT INTO events (`title`, `descript`,"
                         + " `received_no`, `registered_no`, `location`, `start_date`,"
                         + " `end_date`, `expired_date`, `gmap_url`, `events_type_tid`,"
@@ -229,7 +253,20 @@ public class ManageEventServlet extends HttpServlet {
                 out.print("<br>Access Create Condition<br>");
 
                 Statement stmt = conn.createStatement();
-                int numRow = stmt.executeUpdate(queryC);
+                int numRow = 0;
+                //Run SQL commands
+                ResultSet rs = stmt.executeQuery(queryE);
+                rs.next();
+                int total_event = rs.getInt("COUNT(eid)") + 1;
+                
+                //SQL command for inserting event picture
+                String pic_url = request.getParameter("pic_url");
+                String queryP = "INSERT INTO pictures (`pic_url`, `events_eid`)"
+                        + " VALUES ('" + pic_url + "', " + total_event + ");";
+                out.println(queryP);
+                numRow += stmt.executeUpdate(queryC);
+                numRow += stmt.executeUpdate(queryP);
+                    
                 response.sendRedirect("event.jsp");
             } 
             else if (event_action.equals("Delete")) {
