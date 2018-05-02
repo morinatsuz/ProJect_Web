@@ -19,11 +19,12 @@
                            url="jdbc:mysql://localhost:3306/db_project"
                            user="root"  password="root"/>
         <sql:query var="db" dataSource="mysql">
-            SELECT * FROM students WHERE sid = <%= num2%>
+            SELECT * FROM students s JOIN users u ON (s.user_uid = u.uid) WHERE s.sid = <%= num2%>
         </sql:query>
         <c:forEach var="rows" items="${db.rows}">
             <form action="ProfileUpdateServlet" method="POST" >
                 <h3>รหัสนักศึกษา </h3>  <br> <c:out value="${rows.sid}" />
+                <h3>ชื่อจริง นามสกุล </h3>  <br> <c:out value="${rows.fname} ${rows.lname}" />
                 <h3>วันเกิด </h3>     <br> 
                 วัน <select name="bday">
                     <c:forEach var="day" begin="1" end="31">
@@ -40,8 +41,16 @@
                         <option value="${year}"><c:out value="${year}"/></option>
                     </c:forEach>
                 </select>
-                <h3>เพศ </h3>    <br>   <input type="radio" name="sex" value="ชาย" /> ชาย <input type="radio" name="sex" value="หญิง" /> หญิง
-                <h3>อายุ </h3>    <br> <input type="text" name="age" value="" />
+                <h3>เพศ </h3>    <br>
+                <c:choose>
+            <c:when test="${rows.sex == 'หญิง'}">
+                <input type="radio" name="sex" value="ชาย"/> ชาย <input type="radio" name="sex" value="หญิง" checked="checked"/> หญิง
+            </c:when>
+            <c:otherwise>
+                <input type="radio" name="sex" value="ชาย" checked="checked"/> ชาย <input type="radio" name="sex" value="หญิง"/> หญิง
+            </c:otherwise>
+        </c:choose>
+                <h3>อายุ </h3>    <br> <input type="text" name="age" value="${rows.age}" />
                 <h3>ศาสนา </h3>  <br> <select name="religion">
                     <option value="พุทธ">พุทธ</option>
                     <option value="คริสต์">คริสต์</option>
@@ -55,12 +64,12 @@
                     <option value="3">3</option>
                     <option value="4">4</option>
                 </select>
-                <h3>ส่วนสูง </h3>   <br> <input type="text" name="height" value=""/>
-                <h3>น้ำหนัก </h3>   <br> <input type="text" name="weight" value=""/>
-                <h3>รอบอก </h3>  <br> <input type="text" name="chest" value=""/>
-                <h3>รอบเอว </h3>  <br> <input type="text" name="waist" value=""/>
-                <h3>โรคประจำตัว </h3> <br> <input type="text" name="disease" value=""/>
-                <h3>สิ่งที่แพ้ </h3> <br> <input type="text" name="allergy" value=""/>
+                <h3>ส่วนสูง </h3>   <br> <input type="text" name="height" value="${rows.height}}"/>
+                <h3>น้ำหนัก </h3>   <br> <input type="text" name="weight" value="${rows.weight}"/>
+                <h3>รอบอก </h3>  <br> <input type="text" name="chest" value="${rows.chest_size}"/>
+                <h3>รอบเอว </h3>  <br> <input type="text" name="waist" value="${rows.waist_size}"/>
+                <h3>โรคประจำตัว </h3> <br> <input type="text" name="disease" value="${rows.congenital_diseases}"/>
+                <h3>สิ่งที่แพ้ </h3> <br> <input type="text" name="allergy" value="${rows.allergies}"/>
                 <h3>อื่นๆ </h3> <br> <textarea name="other" rows="5" cols="20" >
                 </textarea>
                 <button type="submit" name="update" value="updateP">Update</button>

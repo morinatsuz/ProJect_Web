@@ -19,13 +19,14 @@
                            url="jdbc:mysql://localhost:3306/db_project"
                            user="root"  password="root"/>
         <sql:query var="db" dataSource="mysql">
-            SELECT * FROM students WHERE sid = <%= num2%>
+            SELECT * FROM students s JOIN users u ON (s.user_uid = u.uid) WHERE s.sid = <%= num2%>
         </sql:query>
         <a href="event.jsp"><button type="submit" name="view" value="${rows.eid}" >Home</button></a>
         <a href="LogoutServlet"><button type="submit">Logout</button></a> 
         <a href="ProfileServlet"><button type="submit">Profile</button></a> <br>
         <c:forEach var="rows" items="${db.rows}"> 
             <h3>รหัสนักศึกษา </h3> <c:out value="${rows.sid}"/> <br>
+            <h3>ชื่อจริง นามสกุล </h3> <c:out value="${rows.fname} ${rows.lname}"/> <br>
             <h3>วันเกิด </h3>    <c:out value="${rows.birthday}"/> <br>
             <h3>เพศ </h3>    <c:out value="${rows.sex}"/> <br>
             <h3>อายุ </h3>    <c:out value="${rows.age}"/> <br>
@@ -38,9 +39,20 @@
             <h3>โรคประจำตัว </h3>    <c:out value="${rows.congenital_diseases}"/> <br>
             <h3>สิ่งที่แพ้ </h3>    <c:out value="${rows.allergies}"/> <br>
             <h3>อื่นๆ </h3>    <c:out value="${rows.others}"/> <br>
+
         </c:forEach>
+        <sql:query var="db" dataSource="mysql">
+            SELECT * FROM events e JOIN student_event se ON (e.eid = se.event_eid) WHERE se.student_sid = <%= num2%>
+        </sql:query>
+        <h3>กิจกรรมที่เคยเข้าร่วม</h3> <c:out value="${rows.others}"/>
+        <c:forEach var="rows" items="${db.rows}">
+            <form action="CheckServlet">
+                <c:out value="${rows.title}"/> <button type="submit" name="view" value="${rows.eid}">View</button>
+            </form>
+        </c:forEach>
+        <br>
         <form action="profileEdit.jsp" method="POST">
-            <button type="submit" name="pEdit" value="edit">Edit</button>
+            <button type="submit" name="pEdit" value="edit">Edit Profile</button>
         </form>
     </body>
 </html>

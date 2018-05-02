@@ -276,11 +276,11 @@ public class ManageEventServlet extends HttpServlet {
                 String query4 = "DELETE FROM pictures WHERE events_eid = " + event_id;
                 Statement stmt = conn.createStatement();
                 int numRow = 0;
-                numRow += stmt.executeUpdate(query1);
                 numRow += stmt.executeUpdate(query2);
                 numRow += stmt.executeUpdate(query3);
                 numRow += stmt.executeUpdate(query4);
-                response.sendRedirect("index.html");
+                numRow += stmt.executeUpdate(query1);
+                response.sendRedirect("event.jsp");
             }else {
                 out.println("event_action is not in choices.");
             }
