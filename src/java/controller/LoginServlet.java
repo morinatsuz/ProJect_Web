@@ -8,6 +8,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -58,14 +59,17 @@ public class LoginServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
         String pass = request.getParameter("password");
-        String sql = "select * from users where username =" + "'" + id + "'" + "and password = '" + pass + "'";
+        String sql = "select * from users u join students s on (u.uid = s.user_uid) where username = ? and password = ?";
         HttpSession session = request.getSession();
 
         try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, id);
+            stmt.setString(2, pass);
+            ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 session.setAttribute("uid", rs.getInt("uid"));
+                session.setAttribute("sid", rs.getInt("sid"));
                 if (rs.getString("type").equals("admin")) {
                     session.setAttribute("type", "admin");
                     RequestDispatcher obj = request.getRequestDispatcher("event.jsp");

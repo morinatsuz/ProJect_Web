@@ -27,13 +27,29 @@
         <sql:query var="db" dataSource="mysql">
             SELECT registered_no FROM events WHERE eid = <%= num %> 
         </sql:query>
-            
+        <c:forEach var="rows" items="${db.rows}">
+            <sql:update var="db2" dataSource="mysql">
+                UPDATE events
+                SET registered_no = <c:out value="${rows.registered_no + 1}"/>
+                WHERE eid = <%= num%>
+            </sql:update>
+        </c:forEach>
         <sql:update var="db" dataSource="mysql">
             INSERT INTO student_event (student_sid, event_eid, registered_date)
             VALUES (<%= num2%>, <%= num%>, CURRENT_TIMESTAMP)
         </sql:update>
         <% } %>
         <% if (checkJoin.equals("unjoin")) {%>
+        <sql:query var="db" dataSource="mysql">
+            SELECT registered_no FROM events WHERE eid = <%= num %> 
+        </sql:query>
+        <c:forEach var="rows" items="${db.rows}">
+            <sql:update var="db2" dataSource="mysql">
+                UPDATE events
+                SET registered_no = <c:out value="${rows.registered_no - 1}"/>
+                WHERE eid = <%= num%>
+            </sql:update>
+        </c:forEach>
         <sql:update var="db" dataSource="mysql">
             DELETE FROM student_event
             WHERE student_sid = <%= num2%> AND event_eid = <%= num%>

@@ -52,7 +52,7 @@
                 </c:forEach> 
             </select><br>
             <c:if test="${event_action == 'create'}" >
-                <input type="submit" name="event_action" value="Create" />
+                <button type="submit" name="event_action" value="Create" >Confirm </button>
             </c:if>
             <c:if test="${event_action == 'edit'}" >
                 <input type="submit" name="event_action" value="Save" />

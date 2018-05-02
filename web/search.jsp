@@ -35,9 +35,11 @@
             AND CONCAT(title, ' ', descript, ' ', location, ' ', start_date, ' ', end_date) LIKE '%<%= multiple_keys[i]%>%'
             <% }%>
         </sql:query>
+            <% int num2 = (int) session.getAttribute("sid");%>
         <a href="event.jsp"><button type="submit" name="view" value="${rows.eid}" >Home</button></a>
         <a href="LogoutServlet"><button type="submit">Logout</button></a> 
-        <a href="ProfileServlet"><button type="submit">Profile</button></a> <br>
+        <a href="ProfileServlet"><button type="submit">Profile</button></a> <br> <br>
+        Hello <%= num2 %> <br> <br>
         <form action="search.jsp" method="POST">
             Search : <input type="text" name="searchText" value="<%= request.getParameter("searchText")%>" />
 
@@ -46,7 +48,6 @@
         <c:if test="${adminCheck == 'admin'}">
             <form action="CheckServlet" method="POST">
                 <button type="submit" name="view" value="manage">Manage Event</button>
-                <button type="submit" name="view" value="result">View User</button>
             </form>
         </c:if>
         <table border="1">
@@ -78,12 +79,17 @@
                         <td><c:out value="${rows.expired_date}"/> </td>
                         <td><form action="CheckServlet">
                                 <button type="submit" name="view" value="${rows.eid}">View</button>
-                                <c:if test="${adminCheck == 'admin'}">
-
-                                    <button type="submit" name="view" value="edit">Edit Event</button>
-
-                                </c:if>
                             </form>
+                        </td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${db2.rowCount == 0}">
+                                    Not Join
+                                </c:when>
+                                <c:otherwise>
+                                    Already Joined
+                                </c:otherwise>
+                            </c:choose>
                         </td>
                     </tr>          
 

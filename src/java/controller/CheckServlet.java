@@ -62,7 +62,7 @@ public class CheckServlet extends HttpServlet {
         }
         else if (request.getParameter("view").equals("manage")) {
 
-            RequestDispatcher obj = request.getRequestDispatcher("index.html");
+            RequestDispatcher obj = request.getRequestDispatcher("manage.jsp");
             obj.forward(request, response);
         } else {
             int check = Integer.parseInt(request.getParameter("view"));
@@ -75,7 +75,6 @@ public class CheckServlet extends HttpServlet {
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
                 if (rs.next()) {
-                    session.setAttribute("sid", rs.getInt("sid"));
                     RequestDispatcher obj = request.getRequestDispatcher("detail.jsp");
                     obj.forward(request, response);
                 } else {
