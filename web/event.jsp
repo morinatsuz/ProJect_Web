@@ -8,10 +8,9 @@
 <%@taglib prefix='c' uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix='sql' uri="http://java.sun.com/jsp/jstl/sql" %>
 <!DOCTYPE html>
-<!doctype html>
 <html lang="en">
     <head>
-        <title>Hello, world!</title>
+        <title>Main - Activist Finder</title>
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
@@ -33,6 +32,9 @@
         <sql:query var="db" dataSource="mysql">
             SELECT * FROM events
         </sql:query>
+        <% String adminCheck = (String) session.getAttribute("type");%>
+        <c:set scope="session" var="adminCheck" value="<%= adminCheck%>" ></c:set>
+        <% int num2 = (int) session.getAttribute("sid");%>
         <nav class="navbar navbar-color-on-scroll navbar-transparent fixed-top  navbar-expand-lg " color-on-scroll="50" bg-warning">
              <div class="container">
                 <div class="navbar-translate">
@@ -48,25 +50,26 @@
 
                     <ul class="navbar-nav ml-auto">
 
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="material-icons">dashboard</i>
-                                จัดการ
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="#">สร้างกิจกรรม</a>
-                                <a class="dropdown-item" href="#">จัดการกิจกรรม</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">จัดการสมาชิก</a>
-                            </div>
-                        </li>
+                        <c:if test="${adminCheck == 'admin'}">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">dashboard</i>
+                                    แผงควบคุม
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="#">สร้างกิจกรรม</a>
+                                    <a class="dropdown-item" href="#">จัดการกิจกรรม</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">จัดการสมาชิก</a>
+                                </div>
+                            </li>
+                        </c:if>
 
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">account_circle</i>
-                                โปรไฟล์
+                                สวัสดี, <%= num2%>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="#">กิจกรรมที่เข้าร่วม</a>
@@ -74,7 +77,7 @@
                                 <a class="dropdown-item" href="#">ดูโปรไฟล์</a>
                                 <a class="dropdown-item" href="#">แก้ไขโปรไฟล์</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">ออกจากระบบ</a>
+                                <a class="dropdown-item" href="LogoutServlet">ออกจากระบบ</a>
                             </div>
                         </li>
                     </ul>
@@ -93,7 +96,7 @@
                 <p> ทำให้การเข้าร่วมกิจกรรมเป็นเรื่องง่าย เพียงลงชื่อเข้าใช้ด้วยรหัสนักศึกษาของคุณ และเลือกลงทะเบียนกับกิจกรรมมากมายที่รอคุณอยู่</p>
                 <p>
                     <br>
-                <form>
+                <form action="search.jsp" method="POST">
                     <div class="row">
                         <div class="col-10">
                             <div class="input-group">
@@ -102,16 +105,14 @@
                                         <i class="material-icons">search</i>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="เช่น กิจกรรมคณะไอที...">&nbsp;&nbsp;&nbsp;
-                                <button type="submit" class="btn btn-white btn-raised btn-fab btn-fab-mini btn-round">
+                                <input type="text" name="searchText" class="form-control" placeholder="เช่น กิจกรรมคณะไอที...">&nbsp;&nbsp;&nbsp;
+                                <button type="submit" name="search" value="searched" class="btn btn-white btn-raised btn-fab btn-fab-mini btn-round">
                                     <i class="material-icons">trending_flat</i>
                                 </button>
-                            </div>
-
-                            </form>
-                            </p>
+                            </div>                     
                         </div>
                     </div>
+                </form>
             </div>
 
         </div>
@@ -123,21 +124,36 @@
             <div class="container">
 
                 <div class="row">
-                    <c:forEach var="event" items="${db.rows}">
+                    <c:forEach var="rows" items="${db.rows}">
+                        <sql:query var="db2" dataSource="mysql" >
+                            SELECT * FROM student_event WHERE student_sid = <%= num2%> AND event_eid = <c:out value="${rows.eid}"/>
+                        </sql:query>
                         <div class="col-md-4">
                             <div class="card mb-4 box-shadow">
                                 <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
                                 <div class="card-body">
-                                    <h4 class="card-text">${event.title}</h4>
-                                    <h6 class="card-text">จัดที่ ${event.location}</h6>
-                                    <p class="card-text">${event.descript}</p>
+                                    <c:choose>
+                                        <c:when test="${db2.rowCount == 0}">
+                                            <span class="badge badge-pill badge-danger">ยังไม่สมัคร</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="badge badge-pill badge-success">สมัครแล้ว</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                            <h4 class="card-text"><b>${rows.title}</b></h4>
+
+
+                                    <h6 class="card-text">จัดที่ ${rows.location} | สมัครแล้ว ${rows.registered_no}/${rows.received_no} คน</h6>
+
+
+                                    
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <form action="CheckServlet">
-                                            <button type="submit" name="view" class="btn btn-sm btn-outline-secondary" value="${rows.eid}">ดูรายละเอียด</button>
+                                                <button type="submit" name="view" class="btn btn-sm btn-outline-secondary" value="${rows.eid}">ดูรายละเอียด</button>
                                             </form>
                                         </div>
-                                        <small class="text-muted">${event.end_date}</small>
+                                        <small class="text-muted">${rows.end_date}</small>
                                     </div>
                                 </div>
                             </div>

@@ -12,6 +12,8 @@ public final class event_005f1_jsp extends org.apache.jasper.runtime.HttpJspBase
   private static java.util.List<String> _jspx_dependants;
 
   private org.apache.jasper.runtime.TagHandlerPool _jspx_tagPool_c_forEach_var_items;
+  private org.apache.jasper.runtime.TagHandlerPool _jspx_tagPool_c_set_var_value_scope_nobody;
+  private org.apache.jasper.runtime.TagHandlerPool _jspx_tagPool_c_if_test;
   private org.apache.jasper.runtime.TagHandlerPool _jspx_tagPool_sql_query_var_dataSource;
   private org.apache.jasper.runtime.TagHandlerPool _jspx_tagPool_sql_setDataSource_var_user_url_password_driver_nobody;
 
@@ -23,12 +25,16 @@ public final class event_005f1_jsp extends org.apache.jasper.runtime.HttpJspBase
 
   public void _jspInit() {
     _jspx_tagPool_c_forEach_var_items = org.apache.jasper.runtime.TagHandlerPool.getTagHandlerPool(getServletConfig());
+    _jspx_tagPool_c_set_var_value_scope_nobody = org.apache.jasper.runtime.TagHandlerPool.getTagHandlerPool(getServletConfig());
+    _jspx_tagPool_c_if_test = org.apache.jasper.runtime.TagHandlerPool.getTagHandlerPool(getServletConfig());
     _jspx_tagPool_sql_query_var_dataSource = org.apache.jasper.runtime.TagHandlerPool.getTagHandlerPool(getServletConfig());
     _jspx_tagPool_sql_setDataSource_var_user_url_password_driver_nobody = org.apache.jasper.runtime.TagHandlerPool.getTagHandlerPool(getServletConfig());
   }
 
   public void _jspDestroy() {
     _jspx_tagPool_c_forEach_var_items.release();
+    _jspx_tagPool_c_set_var_value_scope_nobody.release();
+    _jspx_tagPool_c_if_test.release();
     _jspx_tagPool_sql_query_var_dataSource.release();
     _jspx_tagPool_sql_setDataSource_var_user_url_password_driver_nobody.release();
   }
@@ -66,7 +72,7 @@ public final class event_005f1_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("<!doctype html>\n");
       out.write("<html lang=\"en\">\n");
       out.write("    <head>\n");
-      out.write("        <title>Hello, world!</title>\n");
+      out.write("        <title>Main - Activist Finder</title>\n");
       out.write("        <!-- Required meta tags -->\n");
       out.write("        <meta charset=\"utf-8\">\n");
       out.write("        <meta content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0\" name=\"viewport\" />\n");
@@ -92,6 +98,27 @@ public final class event_005f1_jsp extends org.apache.jasper.runtime.HttpJspBase
       if (_jspx_meth_sql_query_0(_jspx_page_context))
         return;
       out.write("\n");
+      out.write("        ");
+ String adminCheck = (String) session.getAttribute("type");
+      out.write("\n");
+      out.write("        ");
+      //  c:set
+      org.apache.taglibs.standard.tag.rt.core.SetTag _jspx_th_c_set_0 = (org.apache.taglibs.standard.tag.rt.core.SetTag) _jspx_tagPool_c_set_var_value_scope_nobody.get(org.apache.taglibs.standard.tag.rt.core.SetTag.class);
+      _jspx_th_c_set_0.setPageContext(_jspx_page_context);
+      _jspx_th_c_set_0.setParent(null);
+      _jspx_th_c_set_0.setScope("session");
+      _jspx_th_c_set_0.setVar("adminCheck");
+      _jspx_th_c_set_0.setValue( adminCheck);
+      int _jspx_eval_c_set_0 = _jspx_th_c_set_0.doStartTag();
+      if (_jspx_th_c_set_0.doEndTag() == javax.servlet.jsp.tagext.Tag.SKIP_PAGE) {
+        _jspx_tagPool_c_set_var_value_scope_nobody.reuse(_jspx_th_c_set_0);
+        return;
+      }
+      _jspx_tagPool_c_set_var_value_scope_nobody.reuse(_jspx_th_c_set_0);
+      out.write("\n");
+      out.write("        ");
+ int num2 = (int) session.getAttribute("sid");
+      out.write("\n");
       out.write("        <nav class=\"navbar navbar-color-on-scroll navbar-transparent fixed-top  navbar-expand-lg \" color-on-scroll=\"50\" bg-warning\">\n");
       out.write("             <div class=\"container\">\n");
       out.write("                <div class=\"navbar-translate\">\n");
@@ -107,25 +134,18 @@ public final class event_005f1_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\n");
       out.write("                    <ul class=\"navbar-nav ml-auto\">\n");
       out.write("\n");
+      out.write("                        ");
+      if (_jspx_meth_c_if_0(_jspx_page_context))
+        return;
       out.write("\n");
-      out.write("                        <li class=\"nav-item dropdown\">\n");
-      out.write("                            <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdownMenuLink\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n");
-      out.write("                                <i class=\"material-icons\">dashboard</i>\n");
-      out.write("                                จัดการ\n");
-      out.write("                            </a>\n");
-      out.write("                            <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdownMenuLink\">\n");
-      out.write("                                <a class=\"dropdown-item\" href=\"#\">สร้างกิจกรรม</a>\n");
-      out.write("                                <a class=\"dropdown-item\" href=\"#\">จัดการกิจกรรม</a>\n");
-      out.write("                                <div class=\"dropdown-divider\"></div>\n");
-      out.write("                                <a class=\"dropdown-item\" href=\"#\">จัดการสมาชิก</a>\n");
-      out.write("                            </div>\n");
-      out.write("                        </li>\n");
       out.write("\n");
       out.write("\n");
       out.write("                        <li class=\"nav-item dropdown\">\n");
       out.write("                            <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdownMenuLink\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n");
       out.write("                                <i class=\"material-icons\">account_circle</i>\n");
-      out.write("                                โปรไฟล์\n");
+      out.write("                                สวัสดี, ");
+      out.print( num2 );
+      out.write("\n");
       out.write("                            </a>\n");
       out.write("                            <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdownMenuLink\">\n");
       out.write("                                <a class=\"dropdown-item\" href=\"#\">กิจกรรมที่เข้าร่วม</a>\n");
@@ -133,7 +153,7 @@ public final class event_005f1_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                <a class=\"dropdown-item\" href=\"#\">ดูโปรไฟล์</a>\n");
       out.write("                                <a class=\"dropdown-item\" href=\"#\">แก้ไขโปรไฟล์</a>\n");
       out.write("                                <div class=\"dropdown-divider\"></div>\n");
-      out.write("                                <a class=\"dropdown-item\" href=\"#\">ออกจากระบบ</a>\n");
+      out.write("                                <a class=\"dropdown-item\" href=\"LogoutServlet\">ออกจากระบบ</a>\n");
       out.write("                            </div>\n");
       out.write("                        </li>\n");
       out.write("                    </ul>\n");
@@ -152,7 +172,7 @@ public final class event_005f1_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                <p> ทำให้การเข้าร่วมกิจกรรมเป็นเรื่องง่าย เพียงลงชื่อเข้าใช้ด้วยรหัสนักศึกษาของคุณ และเลือกลงทะเบียนกับกิจกรรมมากมายที่รอคุณอยู่</p>\n");
       out.write("                <p>\n");
       out.write("                    <br>\n");
-      out.write("                <form>\n");
+      out.write("                <form action=\"search.jsp\" method=\"POST\">\n");
       out.write("                    <div class=\"row\">\n");
       out.write("                        <div class=\"col-10\">\n");
       out.write("                            <div class=\"input-group\">\n");
@@ -161,16 +181,14 @@ public final class event_005f1_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                        <i class=\"material-icons\">search</i>\n");
       out.write("                                    </span>\n");
       out.write("                                </div>\n");
-      out.write("                                <input type=\"text\" class=\"form-control\" placeholder=\"เช่น กิจกรรมคณะไอที...\">&nbsp;&nbsp;&nbsp;\n");
-      out.write("                                <button type=\"submit\" class=\"btn btn-white btn-raised btn-fab btn-fab-mini btn-round\">\n");
+      out.write("                                <input type=\"text\" name=\"searchText\" class=\"form-control\" placeholder=\"เช่น กิจกรรมคณะไอที...\">&nbsp;&nbsp;&nbsp;\n");
+      out.write("                                <button type=\"submit\" name=\"search\" value=\"searched\" class=\"btn btn-white btn-raised btn-fab btn-fab-mini btn-round\">\n");
       out.write("                                    <i class=\"material-icons\">trending_flat</i>\n");
       out.write("                                </button>\n");
-      out.write("                            </div>\n");
-      out.write("\n");
-      out.write("                            </form>\n");
-      out.write("                            </p>\n");
+      out.write("                            </div>                     \n");
       out.write("                        </div>\n");
       out.write("                    </div>\n");
+      out.write("                </form>\n");
       out.write("            </div>\n");
       out.write("\n");
       out.write("        </div>\n");
@@ -311,6 +329,45 @@ public final class event_005f1_jsp extends org.apache.jasper.runtime.HttpJspBase
     return false;
   }
 
+  private boolean _jspx_meth_c_if_0(PageContext _jspx_page_context)
+          throws Throwable {
+    PageContext pageContext = _jspx_page_context;
+    JspWriter out = _jspx_page_context.getOut();
+    //  c:if
+    org.apache.taglibs.standard.tag.rt.core.IfTag _jspx_th_c_if_0 = (org.apache.taglibs.standard.tag.rt.core.IfTag) _jspx_tagPool_c_if_test.get(org.apache.taglibs.standard.tag.rt.core.IfTag.class);
+    _jspx_th_c_if_0.setPageContext(_jspx_page_context);
+    _jspx_th_c_if_0.setParent(null);
+    _jspx_th_c_if_0.setTest(((java.lang.Boolean) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${adminCheck == 'admin'}", java.lang.Boolean.class, (PageContext)_jspx_page_context, null)).booleanValue());
+    int _jspx_eval_c_if_0 = _jspx_th_c_if_0.doStartTag();
+    if (_jspx_eval_c_if_0 != javax.servlet.jsp.tagext.Tag.SKIP_BODY) {
+      do {
+        out.write("\n");
+        out.write("                        <li class=\"nav-item dropdown\">\n");
+        out.write("                            <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdownMenuLink\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n");
+        out.write("                                <i class=\"material-icons\">dashboard</i>\n");
+        out.write("                                แผงควบคุม\n");
+        out.write("                            </a>\n");
+        out.write("                            <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdownMenuLink\">\n");
+        out.write("                                <a class=\"dropdown-item\" href=\"#\">สร้างกิจกรรม</a>\n");
+        out.write("                                <a class=\"dropdown-item\" href=\"#\">จัดการกิจกรรม</a>\n");
+        out.write("                                <div class=\"dropdown-divider\"></div>\n");
+        out.write("                                <a class=\"dropdown-item\" href=\"#\">จัดการสมาชิก</a>\n");
+        out.write("                            </div>\n");
+        out.write("                        </li>\n");
+        out.write("                        ");
+        int evalDoAfterBody = _jspx_th_c_if_0.doAfterBody();
+        if (evalDoAfterBody != javax.servlet.jsp.tagext.BodyTag.EVAL_BODY_AGAIN)
+          break;
+      } while (true);
+    }
+    if (_jspx_th_c_if_0.doEndTag() == javax.servlet.jsp.tagext.Tag.SKIP_PAGE) {
+      _jspx_tagPool_c_if_test.reuse(_jspx_th_c_if_0);
+      return true;
+    }
+    _jspx_tagPool_c_if_test.reuse(_jspx_th_c_if_0);
+    return false;
+  }
+
   private boolean _jspx_meth_c_forEach_0(PageContext _jspx_page_context)
           throws Throwable {
     PageContext pageContext = _jspx_page_context;
@@ -337,15 +394,16 @@ public final class event_005f1_jsp extends org.apache.jasper.runtime.HttpJspBase
           out.write("                                    <h6 class=\"card-text\">จัดที่ ");
           out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${event.location}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("</h6>\n");
-          out.write("                                    \n");
           out.write("                                    <p class=\"card-text\">");
           out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${event.descript}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("</p>\n");
           out.write("                                    <div class=\"d-flex justify-content-between align-items-center\">\n");
           out.write("                                        <div class=\"btn-group\">\n");
-          out.write("                                            <button type=\"submit\" name=\"view\" class=\"btn btn-sm btn-outline-secondary\" value=\"");
+          out.write("                                            <form action=\"CheckServlet\">\n");
+          out.write("                                                <button type=\"submit\" name=\"view\" class=\"btn btn-sm btn-outline-secondary\" value=\"");
           out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${rows.eid}", java.lang.String.class, (PageContext)_jspx_page_context, null));
           out.write("\">ดูรายละเอียด</button>\n");
+          out.write("                                            </form>\n");
           out.write("                                        </div>\n");
           out.write("                                        <small class=\"text-muted\">");
           out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${event.end_date}", java.lang.String.class, (PageContext)_jspx_page_context, null));

@@ -75,7 +75,7 @@ public class CheckServlet extends HttpServlet {
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
                 if (rs.next()) {
-                    RequestDispatcher obj = request.getRequestDispatcher("detail.jsp");
+                    RequestDispatcher obj = request.getRequestDispatcher("detail_1.jsp");
                     obj.forward(request, response);
                 } else {
                     RequestDispatcher obj = request.getRequestDispatcher("event.jsp");
