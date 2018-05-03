@@ -55,6 +55,6 @@
             WHERE student_sid = <%= num2%> AND event_eid = <%= num%>
         </sql:update>
         <% }%>
-        <c:redirect url="detail.jsp"></c:redirect>
+        <c:redirect url="detail_1.jsp"></c:redirect>
     </body>
 </html>

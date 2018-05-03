@@ -59,7 +59,7 @@ public class LoginServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
         String pass = request.getParameter("password");
-        String sql = "select * from users u join students s on (u.uid = s.user_uid) where username = ? and password = ?";
+        String sql = "select * from users u left outer join students s on (u.uid = s.user_uid) where username = ? and password = ?";
         HttpSession session = request.getSession();
 
         try {

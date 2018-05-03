@@ -38,7 +38,7 @@
         <nav class="navbar navbar-color-on-scroll navbar-transparent fixed-top  navbar-expand-lg " color-on-scroll="50" bg-warning">
              <div class="container">
                 <div class="navbar-translate">
-                    <a class="navbar-brand" href="/presentation.html">Activist Finder</a>
+                    <a class="navbar-brand" href="event.jsp">Activist Finder</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                         <span class="navbar-toggler-icon"></span>
@@ -57,13 +57,16 @@
                                     แผงควบคุม
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">สร้างกิจกรรม</a>
-                                    <a class="dropdown-item" href="#">จัดการกิจกรรม</a>
+                                    <a class="dropdown-item" href="#">                                            <form action="CheckServlet" method="POST">
+                        <button class="btn btn-warning" type="submit" name="view" value="manage">จัดการกิจกรรม</button>
+                    </form></a>
+                                    
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">จัดการสมาชิก</a>
+                                    <a class="dropdown-item" href="ViewUser.jsp">จัดการสมาชิก</a>
                                 </div>
                             </li>
                         </c:if>
+                            
 
 
                         <li class="nav-item dropdown">
@@ -72,10 +75,7 @@
                                 สวัสดี, <%= num2%>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="#">กิจกรรมที่เข้าร่วม</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">ดูโปรไฟล์</a>
-                                <a class="dropdown-item" href="#">แก้ไขโปรไฟล์</a>
+                                <a class="dropdown-item" href="profile_1.jsp">ดูโปรไฟล์</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="LogoutServlet">ออกจากระบบ</a>
                             </div>
@@ -122,7 +122,6 @@
 
 
             <div class="container">
-
                 <div class="row">
                     <c:forEach var="rows" items="${db.rows}">
                         <sql:query var="db2" dataSource="mysql" >
@@ -141,12 +140,7 @@
                                         </c:otherwise>
                                     </c:choose>
                                             <h4 class="card-text"><b>${rows.title}</b></h4>
-
-
-                                    <h6 class="card-text">จัดที่ ${rows.location} | สมัครแล้ว ${rows.registered_no}/${rows.received_no} คน</h6>
-
-
-                                    
+                                    <h6 class="card-text">จัดที่ ${rows.location} | สมัครแล้ว ${rows.registered_no}/${rows.received_no} คน</h6>                                  
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <form action="CheckServlet">
@@ -159,11 +153,6 @@
                             </div>
                         </div>
                     </c:forEach>
-
-
-
-
-
                 </div>
             </div>
 

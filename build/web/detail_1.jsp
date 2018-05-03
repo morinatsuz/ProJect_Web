@@ -27,7 +27,7 @@
     </head>
     <body class="profile-page">
         <% request.setCharacterEncoding("UTF-8");%>
-        <% request.setCharacterEncoding("UTF-8"); %>
+        
         <% String adminCheck = (String) session.getAttribute("type"); %>
         <% int num = (int) session.getAttribute("view"); %>
         <% int num2 = (int) session.getAttribute("sid");%>
@@ -41,7 +41,7 @@
             <nav class="navbar navbar-color-on-scroll navbar-transparent fixed-top  navbar-expand-lg " color-on-scroll="50" bg-warning">
                  <div class="container">
                     <div class="navbar-translate">
-                        <a class="navbar-brand" href="/presentation.html">Activist Finder</a>
+                        <a class="navbar-brand" href="event.jsp">Activist Finder</a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                             <span class="navbar-toggler-icon"></span>
@@ -112,106 +112,115 @@
                         </div>
                         <div class="description text-center">
                             <p>${rows.descript}</p>
+                            <sql:query var="db2" dataSource="mysql" >
+                                SELECT * FROM student_event WHERE student_sid = <%= num2%> AND event_eid = <%= num%>
+                            </sql:query>
+                            <c:choose>
+                                <c:when test="${db2.rowCount == 0}">
+                                    <sql:query var="db3" dataSource="mysql" >
+                                        SELECT registered_no, received_no FROM events WHERE eid = <%= num%>
+                                    </sql:query>
+                                    <c:forEach var="rows" items="${db3.rows}">
+
+                                        <c:if test="${rows.registered_no != rows.received_no}">
+                                            <form action="join.jsp" method="POST">
+                                                <button type="submit" name="joinValue" value="join" class="btn btn-success btn-round btn-lg"> 
+                                                    <i class="material-icons">pan_tool</i>  เข้าร่วมกิจกรรม
+                                                </button>
+                                            </form>
+                                        </c:if>
+                                        <c:if test="${rows.registered_no == rows.received_no}">
+                                            <button type="button" class="btn btn-lg btn-warning btn-round" disabled>ผู้สมัครครบตามจำนวนแล้ว</button> <br> <br>
+                                        </c:if>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <form action="join.jsp" method="POST">
+                                        <button type="submit" name="joinValue" value="unjoin" class="btn btn-danger btn-round btn-lg" >ยกเลิกการเข้าร่วม</button>
+                                    </form>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 ml-auto mr-auto">
-                                <div class="profile-tabs">
-                                    <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" href="#studio" role="tab" data-toggle="tab">
-                                                <i class="material-icons">camera</i> Studio
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#works" role="tab" data-toggle="tab">
-                                                <i class="material-icons">palette</i> Work
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
-                                                <i class="material-icons">favorite</i> Favorite
-                                            </a>
-                                        </li>
-                                    </ul>
+
+
+                        <div class="container">
+                            <div class="text-center">
+                                <br><br>
+                                <hr/>
+                                <br>
+                                <h3 class="title"> กระดานข้อความ </h3>
+                            </div>
+                            <div class="row-10">
+
+                                <div class="card mb-10 box-shadow">
+                                    <div class="card-body">
+                                        <h4 class="card-text"><b>แสดงความคิดเห็นของคุณที่นี่</b></h4>
+                                        <form action="CommentUpdate.jsp" method="POST">
+                                            <div class="form-group">
+                                                <label for="exampleInput1" class="bmd-label-floating">เขียนความเห็นของคุณ...</label>
+                                                <input type="text" name="comment" class="form-control">
+
+                                            </div>
+                                            <button type="submit" name="post" class="btn btn-warning">ส่งข้อความ</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="row-10">
+
+                                    <sql:query var="db3" dataSource="mysql" >
+                                        SELECT * FROM user_event ue JOIN users u ON (u.uid = ue.user_uid)  WHERE ue.event_eid = <%= num%>
+                                    </sql:query>
+                                    <c:forEach var="rows" items="${db3.rows}">
+
+                                        <div class="card mb-10 box-shadow">
+                                            <div class="card-body">
+                                                <h4 class="card-text">${rows.message}</h4>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <small class="text-muted">${rows.fname} ${rows.lname}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </c:forEach>
+                                    <br><br><br>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-content tab-space">
-                            <div class="tab-pane active text-center gallery" id="studio">
-                                <div class="row">
-                                    <div class="col-md-3 ml-auto">
-                                        <img src="../assets/img/kit/free/examples/studio-1.jpg" class="rounded">
-                                        <img src="../assets/img/kit/free/examples/studio-2.jpg" class="rounded">
-                                    </div>
-                                    <div class="col-md-3 mr-auto">
-                                        <img src="../assets/img/kit/free/examples/studio-5.jpg" class="rounded">
-                                        <img src="../assets/img/kit/free/examples/studio-4.jpg" class="rounded">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane text-center gallery" id="works">
-                                <div class="row">
-                                    <div class="col-md-3 ml-auto">
-                                        <img src="../assets/img/kit/free/examples/olu-eletu.jpg" class="rounded">
-                                        <img src="../assets/img/kit/free/examples/clem-onojeghuo.jpg" class="rounded">
-                                        <img src="../assets/img/kit/free/examples/cynthia-del-rio.jpg" class="rounded">
-                                    </div>
-                                    <div class="col-md-3 mr-auto">
-                                        <img src="../assets/img/kit/free/examples/mariya-georgieva.jpg" class="rounded">
-                                        <img src="../assets/img/kit/free/examples/clem-onojegaw.jpg" class="rounded">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane text-center gallery" id="favorite">
-                                <div class="row">
-                                    <div class="col-md-3 ml-auto">
-                                        <img src="../assets/img/kit/free/examples/mariya-georgieva.jpg" class="rounded">
-                                        <img src="../assets/img/kit/free/examples/studio-3.jpg" class="rounded">
-                                    </div>
-                                    <div class="col-md-3 mr-auto">
-                                        <img src="../assets/img/kit/free/examples/clem-onojeghuo.jpg" class="rounded">
-                                        <img src="../assets/img/kit/free/examples/olu-eletu.jpg" class="rounded">
-                                        <img src="../assets/img/kit/free/examples/studio-1.jpg" class="rounded">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </c:forEach>
+                    </c:forEach>
+                </div>
             </div>
-        </div>
 
 
-        <!--   Core JS Files   -->
-        <script src="static/js/core/jquery.min.js"></script>
-        <script src="static/js/core/popper.min.js"></script>
-        <script src="static/js/bootstrap-material-design.js"></script>
+            <!--   Core JS Files   -->
+            <script src="static/js/core/jquery.min.js"></script>
+            <script src="static/js/core/popper.min.js"></script>
+            <script src="static/js/bootstrap-material-design.js"></script>
 
-        <!-- Plugin for Date Time Picker and Full Calendar Plugin-->
-        <script src="static/js/plugins/moment.min.js"></script>
+            <!-- Plugin for Date Time Picker and Full Calendar Plugin-->
+            <script src="static/js/plugins/moment.min.js"></script>
 
-        <!-- Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
-        <script src="static/js/plugins/bootstrap-selectpicker.js"></script>
+            <!-- Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
+            <script src="static/js/plugins/bootstrap-selectpicker.js"></script>
 
-        <!-- Plugin for Tags, full documentation here: http://xoxco.com/projects/code/tagsinput/  -->
-        <script src="static/js/plugins/bootstrap-tagsinput.js"></script>
+            <!-- Plugin for Tags, full documentation here: http://xoxco.com/projects/code/tagsinput/  -->
+            <script src="static/js/plugins/bootstrap-tagsinput.js"></script>
 
-        <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
-        <script src="static/js/plugins/jasny-bootstrap.min.js"></script>
+            <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+            <script src="static/js/plugins/jasny-bootstrap.min.js"></script>
 
-        <!-- Plugin for Small Gallery in Product Page -->
-        <script src="static/js/plugins/jquery.flexisel.js"></script>
+            <!-- Plugin for Small Gallery in Product Page -->
+            <script src="static/js/plugins/jquery.flexisel.js"></script>
 
-        <!-- Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
-        <script src="static/js/plugins/bootstrap-datetimepicker.min.js"></script>
+            <!-- Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
+            <script src="static/js/plugins/bootstrap-datetimepicker.min.js"></script>
 
-        <!-- Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-        <script src="static/js/plugins/nouislider.min.js"></script>
+            <!-- Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+            <script src="static/js/plugins/nouislider.min.js"></script>
 
-        <!-- Material Kit Core initialisations of plugins and Bootstrap Material Design Library -->
-        <script src="static/js/material-kit.js?v=2.0.0"></script>
+            <!-- Material Kit Core initialisations of plugins and Bootstrap Material Design Library -->
+            <script src="static/js/material-kit.js?v=2.0.0"></script>
 
-        <script src="static/js/plugins/holder.min.js"></script>
+            <script src="static/js/plugins/holder.min.js"></script>
 
     </body >
 </html>
