@@ -59,7 +59,7 @@ public class LoginServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
         String pass = request.getParameter("password");
-        String sql = "select * from users u left outer join students s on (u.uid = s.user_uid) where username = ? and password = ?";
+        String sql = "select * from users u left join students s on (u.uid = s.user_uid) where username = ? and password = ?";
         HttpSession session = request.getSession();
 
         try {
@@ -70,6 +70,8 @@ public class LoginServlet extends HttpServlet {
             if (rs.next()) {
                 session.setAttribute("uid", rs.getInt("uid"));
                 session.setAttribute("sid", rs.getInt("sid"));
+                session.setAttribute("fname", rs.getString("fname"));
+                session.setAttribute("lname", rs.getString("lname"));
                 if (rs.getString("type").equals("admin")) {
                     session.setAttribute("type", "admin");
                     RequestDispatcher obj = request.getRequestDispatcher("event.jsp");
