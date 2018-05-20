@@ -18,6 +18,7 @@
         <% String event_action = request.getParameter("event_action"); %>
         <c:set var="event_id" value="${requestScope.event_id}"/>
         <c:set var="event_action" value="${requestScope.event_action}"/>
+        <c:set var="etid" value="requestScope.events_type_tid"/>
         <c:if test="${event_action == 'create'}" >
             <h1>Create Event</h1>
         </c:if>
@@ -28,7 +29,9 @@
         <form action="ManageEventServlet" method="POST">
             #Event ID:<input type="text" name="event_id" value="${requestScope.event_id}" readonly="readonly" /><br>
             #Event type ID:<input type="text" name="events_type_tid" value="${requestScope.events_type_tid}" readonly="readonly" /><br>
+            #Event type name:<input type="text" name="" value="${requestScope.event_type_name}" readonly="readonly" /><br>
             #Creator ID:<input type="text" name="admins_aid" value="${requestScope.admins_aid}" readonly="readonly" /><br>
+            #Creator name: <input type="text" name="" value="${requestScope.fullname}" readonly="readonly"/><br>
             #Registered Now:<input type="text" name="registered_no" value="${requestScope.registered_no}" readonly="readonly" /><br>
             Title:<input type="text" name="title" value="${requestScope.title}" /><br>
             Description:<br>
@@ -51,6 +54,8 @@
                     <option value="${count}">${count}. ${type}</option>
                 </c:forEach> 
             </select><br>
+            Picture URL: <input type="text" name="pic_url" value="${requestScope.pic_url}" />
+            <br><br>
             <c:if test="${event_action == 'create'}" >
                 <button type="submit" name="event_action" value="Create" >Confirm </button>
             </c:if>
