@@ -32,6 +32,7 @@
         <sql:query var="db" dataSource="mysql">
             SELECT * FROM events
         </sql:query>
+
         <% String adminCheck = (String) session.getAttribute("type");%>
         <c:set scope="session" var="adminCheck" value="<%= adminCheck%>" ></c:set>
         <% int num2 = (int) session.getAttribute("sid");%>
@@ -58,15 +59,15 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="#">                                            <form action="CheckServlet" method="POST">
-                        <button class="btn btn-warning" type="submit" name="view" value="manage">จัดการกิจกรรม</button>
-                    </form></a>
-                                    
+                                            <button class="btn btn-warning" type="submit" name="view" value="manage">จัดการกิจกรรม</button>
+                                        </form></a>
+
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="ViewUser.jsp">จัดการสมาชิก</a>
                                 </div>
                             </li>
                         </c:if>
-                            
+
 
 
                         <li class="nav-item dropdown">
@@ -75,7 +76,7 @@
                                 สวัสดี, <%= num2%>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="profile_1.jsp">ดูโปรไฟล์</a>
+                                <a class="dropdown-item" href="profile.jsp">ดูโปรไฟล์</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="LogoutServlet">ออกจากระบบ</a>
                             </div>
@@ -129,7 +130,10 @@
                         </sql:query>
                         <div class="col-md-4">
                             <div class="card mb-4 box-shadow">
-                                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+
+                                
+<!--                                    <img class="card-img-top" data-src="${rows.pic_url}" alt="Card image cap">-->
+                                
                                 <div class="card-body">
                                     <c:choose>
                                         <c:when test="${db2.rowCount == 0}">
@@ -139,7 +143,7 @@
                                             <span class="badge badge-pill badge-success">สมัครแล้ว</span>
                                         </c:otherwise>
                                     </c:choose>
-                                            <h4 class="card-text"><b>${rows.title}</b></h4>
+                                    <h4 class="card-text"><b>${rows.title}</b></h4>
                                     <h6 class="card-text">จัดที่ ${rows.location} | สมัครแล้ว ${rows.registered_no}/${rows.received_no} คน</h6>                                  
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">

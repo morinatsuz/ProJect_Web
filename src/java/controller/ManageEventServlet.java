@@ -300,7 +300,8 @@ public class ManageEventServlet extends HttpServlet {
                 numRow += stmt.executeUpdate(queryC);
                 numRow += stmt.executeUpdate(queryP);
                     
-                response.sendRedirect("event.jsp");
+                RequestDispatcher obj = request.getRequestDispatcher("manage.jsp");
+                    obj.forward(request, response);
             } 
             else if (event_action.equals("Delete")) {
                 String query1 = "DELETE FROM events WHERE eid = " + event_id;
@@ -313,7 +314,8 @@ public class ManageEventServlet extends HttpServlet {
                 numRow += stmt.executeUpdate(query3);
                 numRow += stmt.executeUpdate(query4);
                 numRow += stmt.executeUpdate(query1);
-                response.sendRedirect("event.jsp");
+                RequestDispatcher obj = request.getRequestDispatcher("manage.jsp");
+                    obj.forward(request, response);
             }else {
                 out.println("event_action is not in choices.");
             }

@@ -25,6 +25,6 @@
             INSERT INTO user_event (user_uid, event_eid, message, timedate)
             VALUES (<%= uid %>, <%= eid%>, '<%= commentText %>', CURRENT_TIMESTAMP)
         </sql:update>
-        <c:redirect url="detail_1.jsp"></c:redirect>
+        <c:redirect url="detail.jsp"></c:redirect>
     </body>
 </html>
