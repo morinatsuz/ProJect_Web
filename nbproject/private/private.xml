@@ -2,13 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Boom/Documents/NetBeansProjects/Project_Web_CSS2/src/java/controller/DetailServlet.java</file>
-            <file>file:/C:/Users/Boom/Documents/NetBeansProjects/Project_Web_CSS2/src/java/controller/ProfileServlet.java</file>
-            <file>file:/C:/Users/Boom/Documents/NetBeansProjects/Project_Web_CSS2/src/java/utils/Validator.java</file>
-            <file>file:/C:/Users/Boom/Documents/NetBeansProjects/Project_Web_CSS2/src/java/controller/ManageEventServlet.java</file>
-            <file>file:/C:/Users/Boom/Documents/NetBeansProjects/Project_Web_CSS2/src/java/controller/CheckServlet.java</file>
-            <file>file:/C:/Users/Boom/Documents/NetBeansProjects/Project_Web_CSS2/src/java/controller/ProfileUpdateServlet.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

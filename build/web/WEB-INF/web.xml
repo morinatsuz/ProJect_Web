@@ -9,19 +9,15 @@
         <servlet-name>default</servlet-name>
         <url-pattern>/static/*</url-pattern>
     </servlet-mapping>-->
-    <login-config>
-        <auth-method>FORM</auth-method>
-        <form-login-config>
-            <form-login-page>/login.html</form-login-page>
-            <form-error-page>/error.html</form-error-page>
-        </form-login-config>
-    </login-config>
     <welcome-file-list>
         <welcome-file>login.html</welcome-file>
     </welcome-file-list>
     <error-page>
         <!-- Forbidden directory listing -->
         <error-code>403</error-code>
-        <location>/error.html</location>
+        <location>/errorAccess.html</location>
     </error-page>
+    <login-config>
+        <auth-method>BASIC</auth-method>
+    </login-config>
 </web-app>

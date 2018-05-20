@@ -82,7 +82,7 @@ public class LoginServlet extends HttpServlet {
                     obj.forward(request, response);
                 }
             } else {
-                RequestDispatcher obj = request.getRequestDispatcher("error.html");
+                RequestDispatcher obj = request.getRequestDispatcher("errorLogin.html");
                 obj.forward(request, response);
             }
         } catch (SQLException ex) {
