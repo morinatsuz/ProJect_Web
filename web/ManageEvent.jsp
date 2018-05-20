@@ -4,6 +4,7 @@
     Author     : Boom
 --%>
 
+<%@page import="utils.Validator"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html>
@@ -13,6 +14,12 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <% 
+            if (!Validator.authorize(request, "admin")) {
+                response.sendError(403);
+                return;
+            }
+        %>
         <h1><a href="event.jsp">HOME</a></h1>
         <% String event_id = request.getParameter("event_id"); %>
         <% String event_action = request.getParameter("event_action"); %>

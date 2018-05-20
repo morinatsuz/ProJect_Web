@@ -1,3 +1,4 @@
+<%@page import="utils.Validator"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%-- 
     Document   : ViewRegisteredUser
@@ -13,6 +14,12 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <% 
+            if (!Validator.authorize(request, "admin")) {
+                response.sendError(403);
+                return;
+            }
+        %>
         <% int sid = (int)request.getAttribute("usersid"); %>
         <sql:setDataSource var="mysql" driver="com.mysql.jdbc.Driver"
                            url="jdbc:mysql://localhost:3306/db_project"

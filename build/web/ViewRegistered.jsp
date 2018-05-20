@@ -1,3 +1,4 @@
+<%@page import="utils.Validator"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix='sql' uri="http://java.sun.com/jsp/jstl/sql" %>
 <%-- 
@@ -29,6 +30,12 @@
     </head>
 
     <body class="signup-page ">
+        <% 
+            if (!Validator.authorize(request, "admin")) {
+                response.sendError(403);
+                return;
+            }
+        %>
         <% request.setCharacterEncoding("UTF-8");%>
         <sql:setDataSource var="mysql" driver="com.mysql.jdbc.Driver"
                            url="jdbc:mysql://rmtrs.itforge.io:3306/3waydb"

@@ -43,20 +43,20 @@
                 </select>
                 <h3>เพศ </h3>    <br>
                 <c:choose>
-            <c:when test="${rows.sex == 'Female'}">
-                <input type="radio" name="sex" value="Male"/> Male <input type="radio" name="sex" value="Female" checked="checked"/> Female
+            <c:when test="${rows.sex == 'หญิง'}">
+                <input type="radio" name="sex" value="ชาย"/> ชาย <input type="radio" name="sex" value="หญิง" checked="checked"/> หญิง
             </c:when>
             <c:otherwise>
-                <input type="radio" name="sex" value="Male" checked="checked"/> Male <input type="radio" name="sex" value="Female"/> Female
+                <input type="radio" name="sex" value="ชาย" checked="checked"/> ชาย <input type="radio" name="sex" value="หญิง"/> หญิง
             </c:otherwise>
         </c:choose>
                 <h3>อายุ </h3>    <br> <input type="text" name="age" value="${rows.age}" />
                 <h3>ศาสนา </h3>  <br> <select name="religion">
-                    <option value="Buddhist">Buddhist</option>
-                    <option value="Christianity">Christianity</option>
-                    <option value="Islam">Islam</option>
-                    <option value="None">None</option>
-                    <option value="Other">Other</option>
+                    <option value="พุทธ">พุทธ</option>
+                    <option value="คริสต์">คริสต์</option>
+                    <option value="อิสลาม">อิสลาม</option>
+                    <option value="ไม่มี">ไม่มี</option>
+                    <option value="อื่นๆ">อื่นๆ</option>
                 </select>
                 <h3>ชั้นปี </h3>     <br> <select name="year">
                     <option value="1">1</option>

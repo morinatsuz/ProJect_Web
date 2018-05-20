@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
+import utils.Validator;
 
 /**
  *
@@ -55,7 +56,6 @@ public class CheckServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
         if (request.getParameter("view").equals("result")) {
             RequestDispatcher obj = request.getRequestDispatcher("ViewUser.jsp");
             obj.forward(request, response);
